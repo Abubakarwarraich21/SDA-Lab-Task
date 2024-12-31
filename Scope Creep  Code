@@ -1,0 +1,121 @@
+
+
+import java.util.UUID;
+import java.time.LocalDateTime;
+
+class FeatureRequest {
+    private String id;
+    private String title;
+    private String description;
+    private String priority;
+    private LocalDateTime createdAt;
+    private String status;
+
+    public FeatureRequest(String title, String description, String priority) {
+        this.id = UUID.randomUUID().toString();
+        this.title = title;
+        this.description = description;
+        this.priority = priority;
+        this.createdAt = LocalDateTime.now();
+        this.status = "Pending Review";
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void approve() {
+        this.status = "Approved";
+        System.out.println("Feature '" + title + "' approved.");
+    }
+
+    public void reject() {
+        this.status = "Rejected";
+        System.out.println("Feature '" + title + "' rejected.");
+    }
+}
+
+public class FeatureRequestExample {
+    public static void main(String[] args) {
+        // Sample feature request
+        FeatureRequest newFeature = new FeatureRequest(
+            "Multi-Language Support",
+            "Add support for French and Spanish languages",
+            "Should-have"
+        );
+
+      
+        System.out.println("New feature request submitted: " + newFeature.getTitle() + " - " + newFeature.getStatus());
+
+        // Review the feature request
+        reviewFeatureRequest(newFeature);
+
+        // Print the status after review
+        System.out.println("Feature status after review: " + newFeature.getStatus());
+    }
+
+    public static void reviewFeatureRequest(FeatureRequest request) {
+        System.out.println("Reviewing request: " + request.getTitle());
+        if ("Must-have".equals(request.getStatus())) {
+            request.approve();
+        } else if ("Should-have".equals(request.getStatus())) {
+            System.out.println("Pending approval: This can be planned for the next sprint.");
+        } else {
+            request.reject();
+        }
+    }
+}
+Step 2: Backlog Management (Track Approved/Rejected Features)
+java
+Copy code
+import java.util.ArrayList;
+import java.util.List;
+
+class Backlog {
+    private List<FeatureRequest> features;
+
+    public Backlog() {
+        this.features = new ArrayList<>();
+    }
+
+    public void addFeature(FeatureRequest feature) {
+        this.features.add(feature);
+    }
+
+    public void showBacklog() {
+        System.out.println("\nCurrent Backlog:");
+        for (FeatureRequest feature : features) {
+            System.out.println("Feature: " + feature.getTitle() + ", Status: " + feature.getStatus());
+        }
+    }
+}
+
+public class BacklogExample {
+    public static void main(String[] args) {
+        
+        Backlog backlog = new Backlog();
+
+       
+        FeatureRequest newFeature = new FeatureRequest(
+            "Multi-Language Support",
+            "Add support for French and Spanish languages",
+            "Should-have"
+        );
+
+    
+        backlog.addFeature(newFeature);
+
+        backlog.showBacklog();
+    }
+}
+
+
+
